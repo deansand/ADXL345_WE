@@ -491,6 +491,50 @@ private:
 
 #endif
 
+#ifndef ADXL345_WE_CHILD
+#define ADXL345_WE_CHILD
+
+class ADXL345_WE_Child : public ADXL345_WE  {
+public:
+    using ADXL345_WE::ADXL345_WE;
+
+    bool selfTest() {
+        
+        //set selfTest bit = 1
+        setSelfTestBit(true);
+
+        //get value with selfTest
+        xyzValues selfTestData = readAccel();
+
+        //set selfTest bit = 0
+        setSelfTestBit(false);
+
+        //get value without selfTest
+        xyzValues normalData = readAccel();
+
+        //calculate difference betwen data
+        float diffX = std::abs(*selfTestData.x - *normalData.x);
+        float diffY = std::abs(*selfTestData.y - *normalData.y);
+        float diffZ = std::abs(*selfTestData.z - *normalData.z);
+    
+        //checking if data is in our limits
+        return(diffX >= EXPECTED_MIN_X && diffX <= EXPECTED_MAX_X
+            && diffY >= EXPECTED_MIN_Y && diffY <= EXPECTED_MAX_Y
+            && diffZ >= EXPECTED_MIN_Z && diffZ <= EXPECTED_MAX_Z)
+    }
+
+//expected self-test limits
+private:
+    static constexpr float EXPECTED_MIN_X = 0.1;
+    static constexpr float EXPECTED_MAX_X = 0.3;
+    static constexpr float EXPECTED_MIN_Y = 0.1;
+    static constexpr float EXPECTED_MAX_Y = 0.3;
+    static constexpr float EXPECTED_MIN_Z = 0.1;
+    static constexpr float EXPECTED_MAX_Z = 0.3;
+};
+
+#endif
+
 #if 0
  
  /** Get 3-axis accleration measurements.
