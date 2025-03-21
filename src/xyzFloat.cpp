@@ -1,15 +1,15 @@
-/* defines the structure xyzFloat which is used for gyroscopes, accelerometers and 
+/* defines the structure vector3_u which is used for gyroscopes, accelerometers and 
    magnetometers such as ICM20948, MPU9250, ADXL345, etc. */
 
    #include "xyzFloat.h"
 
-   xyzFloat::xyzFloat()
-       : xyzFloat(0.f, 0.f, 0.f)
+   vector3_u::vector3_u()
+       : vector3_u(0.f, 0.f, 0.f)
    {
        // intentionally empty
    }
    
-   xyzFloat::xyzFloat(float const x, float const y, float const z)
+   vector3_u::vector3_u(float const x, float const y, float const z)
        : x(x)
        , y(y)
        , z(z)
@@ -17,54 +17,54 @@
        // intentionally empty
    }
    
-   xyzFloat xyzFloat::operator+() const
+   vector3_u vector3_u::operator+() const
    {
        return *this;
    }
    
-   xyzFloat xyzFloat::operator-() const
+   vector3_u vector3_u::operator-() const
    {
-       return xyzFloat{-x,
+       return vector3_u{-x,
                        -y,
                        -z};
    }
    
-   xyzFloat xyzFloat::operator+(xyzFloat const & summand) const
+   vector3_u vector3_u::operator+(vector3_u const & summand) const
    {
-       return xyzFloat{x + summand.x,
+       return vector3_u{x + summand.x,
                        y + summand.y,
                        z + summand.z};
    }
    
-   xyzFloat xyzFloat::operator-(xyzFloat const & subtrahend) const
+   vector3_u vector3_u::operator-(vector3_u const & subtrahend) const
    {
-       return xyzFloat{x - subtrahend.x,
+       return vector3_u{x - subtrahend.x,
                        y - subtrahend.y,
                        z - subtrahend.z};
    }
    
-   xyzFloat xyzFloat::operator*(float const operand) const
+   vector3_u vector3_u::operator*(float const operand) const
    {
-       return xyzFloat{x * operand,
+       return vector3_u{x * operand,
                        y * operand,
                        z * operand};
    }
    
-   xyzFloat xyzFloat::operator*(xyzFloat const & operand) const
+   vector3_u vector3_u::operator*(vector3_u const & operand) const
    {
-       return xyzFloat{x * operand.x,
+       return vector3_u{x * operand.x,
                        y * operand.y,
                        z * operand.z};
    }
    
-   xyzFloat xyzFloat::operator/(float const divisor) const
+   vector3_u vector3_u::operator/(float const divisor) const
    {
-       return xyzFloat{x / divisor,
+       return vector3_u{x / divisor,
                        y / divisor,
                        z / divisor};
    }
    
-   xyzFloat & xyzFloat::operator+=(xyzFloat const & summand)
+   vector3_u & vector3_u::operator+=(vector3_u const & summand)
    {
        x += summand.x;
        y += summand.y;
@@ -72,7 +72,7 @@
        return *this;
    }
    
-   xyzFloat & xyzFloat::operator-=(xyzFloat const & subtrahend)
+   vector3_u & vector3_u::operator-=(vector3_u const & subtrahend)
    {
        x -= subtrahend.x;
        y -= subtrahend.y;
@@ -80,7 +80,7 @@
        return *this;
    }
    
-   xyzFloat & xyzFloat::operator*=(xyzFloat const & operand)
+   vector3_u & vector3_u::operator*=(vector3_u const & operand)
    {
        x *= operand.x;
        y *= operand.y;
@@ -88,7 +88,7 @@
        return *this;
    }
    
-   xyzFloat & xyzFloat::operator*=(float const operand)
+   vector3_u & vector3_u::operator*=(float const operand)
    {
        x *= operand;
        y *= operand;
@@ -96,7 +96,7 @@
        return *this;
    }
    
-   xyzFloat & xyzFloat::operator/=(float const divisor)
+   vector3_u & vector3_u::operator/=(float const divisor)
    {
        x /= divisor;
        y /= divisor;

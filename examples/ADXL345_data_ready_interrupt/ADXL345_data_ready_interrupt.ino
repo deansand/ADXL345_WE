@@ -105,7 +105,7 @@ void setup(){
 void loop() {
   // you see here is no delay to control the output rate
   if(dataReady==true){
-    xyzFloat g = myAcc.getGValues();
+    vector3_u g = myAcc.getGValues();
     // dataReady = false; // uncomment, if you want capture next interrupts
       
     Serial.print("g-x   = ");

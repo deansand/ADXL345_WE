@@ -45,7 +45,7 @@ void setup(){
 }
 
 void loop() {
-  xyzFloat raw = myAcc.getRawValues();
+  vector3_u raw = myAcc.getRawValues();
   Serial.print("Raw-x = ");
   Serial.print(raw.x);
   Serial.print("  |  Raw-y = ");

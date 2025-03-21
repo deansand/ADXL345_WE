@@ -1,28 +1,28 @@
-/* defines the structure xyzFloat which is used for gyroscopes, accelerometers and 
+/* defines the structure vector3_u which is used for gyroscopes, accelerometers and 
    magnetometers such as ICM209468, MPU9250, ADXL345, etc. */
 
    #ifndef XYZ_FLOAT_H_
    #define XYZ_FLOAT_H_
    #include <xyzFloat.h>
-   struct xyzFloat {
+   struct vector3_u {
        float x;
        float y;
        float z;
    
-       xyzFloat();
-       xyzFloat(float const x, float const y, float const z);
+       vector3_u();
+       vector3_u(float const x, float const y, float const z);
    
-       xyzFloat operator+() const;
-       xyzFloat operator-() const;
-       xyzFloat operator+(xyzFloat const & summand) const;
-       xyzFloat operator-(xyzFloat const & subtrahend) const;
-       xyzFloat operator*(float const operand) const;
-       xyzFloat operator*(xyzFloat const & operand) const;
-       xyzFloat operator/(float const divisor) const;
-       xyzFloat & operator+=(xyzFloat const & summand);
-       xyzFloat & operator-=(xyzFloat const & subtrahend);
-       xyzFloat & operator*=(xyzFloat const & operand);
-       xyzFloat & operator*=(float const operand);
-       xyzFloat & operator/=(float const divisor);
+       vector3_u operator+() const;
+       vector3_u operator-() const;
+       vector3_u operator+(vector3_u const & summand) const;
+       vector3_u operator-(vector3_u const & subtrahend) const;
+       vector3_u operator*(float const operand) const;
+       vector3_u operator*(vector3_u const & operand) const;
+       vector3_u operator/(float const divisor) const;
+       vector3_u & operator+=(vector3_u const & summand);
+       vector3_u & operator-=(vector3_u const & subtrahend);
+       vector3_u & operator*=(vector3_u const & operand);
+       vector3_u & operator*=(float const operand);
+       vector3_u & operator/=(float const divisor);
    };
    #endif

@@ -136,7 +136,7 @@ void setup() {
 
 void loop() {
   if ((millis() % 300) == 1) {
-    xyzFloat g = myAcc.getGValues();
+    vector3_u g = myAcc.getGValues();
     Serial.print("g-x   = ");
     Serial.print(g.x);
     Serial.print("  |  g-y   = ");

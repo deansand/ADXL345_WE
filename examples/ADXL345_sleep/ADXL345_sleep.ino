@@ -91,7 +91,7 @@ void loop(){
 
 void doMeasurements(){
   for(int i=0; i<10; i++){
-    xyzFloat g = myAcc.getGValues();
+    vector3_u g = myAcc.getGValues();
     
     Serial.print("g-x   = ");
     Serial.print(g.x);
