@@ -185,17 +185,17 @@
          
          /* x,y,z results */
              
-         void getRawValues(vector3_u *rawVal);
-         void getCorrectedRawValues(vector3_u *rawVal);
-         void getGValues(vector3_u *gVal);
+         void getRawValues(xyzFloat *rawVal);
+         void getCorrectedRawValues(xyzFloat *rawVal);
+         void getGValues(xyzFloat *gVal);
              
          /* Angles and Orientation */ 
          
-         void getAngles(vector3_u *angleVal);
-         void getCorrAngles(vector3_u *corrAngleVal);
+         void getAngles(xyzFloat *angleVal);
+         void getCorrAngles(xyzFloat *corrAngleVal);
          void measureAngleOffsets();
-         vector3_u getAngleOffsets();
-         void setAngleOffsets(vector3_u aos);
+         xyzFloat getAngleOffsets();
+         void setAngleOffsets(xyzFloat aos);
          adxl345_orientation getOrientation();
          String getOrientationAsString();
          float getPitch();
@@ -242,9 +242,9 @@
          unsigned long spiClock = 5000000;
          uint8_t i2cAddress;
          uint8_t regVal;   // intermediate storage of register values
-         vector3_u offsetVal;
-         vector3_u angleOffsetVal;
-         vector3_u corrFact;
+         xyzFloat offsetVal;
+         xyzFloat angleOffsetVal;
+         xyzFloat corrFact;
          int csPin;
          bool useSPI;    
          int mosiPin;

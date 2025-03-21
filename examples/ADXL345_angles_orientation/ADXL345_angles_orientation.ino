@@ -86,10 +86,10 @@ void setup(){
 }
 
 void loop() {
-  vector3_u raw = myAcc.getRawValues();
-  vector3_u g = myAcc.getGValues();
-  vector3_u angle = myAcc.getAngles();
-  vector3_u corrAngles = myAcc.getCorrAngles();
+  xyzFloat raw = myAcc.getRawValues();
+  xyzFloat g = myAcc.getGValues();
+  xyzFloat angle = myAcc.getAngles();
+  xyzFloat corrAngles = myAcc.getCorrAngles();
   
 /* Still the uncorrected raw values!! */  
   Serial.print("Raw-x    = ");

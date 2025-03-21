@@ -170,7 +170,7 @@ String ADXL345_WE::getRangeAsString(){
 
 /************ x,y,z results ************/
 
-void ADXL345_WE::getRawValues(vector3_u *rawVal){
+void ADXL345_WE::getRawValues(xyzFloat *rawVal){
     uint8_t rawData[6]; 
     readMultipleRegisters(ADXL345_DATAX0, 6, rawData);
     rawVal->x = (static_cast<int16_t>((rawData[1] << 8) | rawData[0])) * 1.0;
@@ -178,7 +178,7 @@ void ADXL345_WE::getRawValues(vector3_u *rawVal){
     rawVal->z = (static_cast<int16_t>((rawData[5] << 8) | rawData[4])) * 1.0;
 }
 
-void ADXL345_WE::getCorrectedRawValues(vector3_u *rawVal){
+void ADXL345_WE::getCorrectedRawValues(xyzFloat *rawVal){
     uint8_t rawData[6]; 
     readMultipleRegisters(ADXL345_DATAX0, 6, rawData);
     int16_t xRaw = static_cast<int16_t>(rawData[1] << 8) | rawData[0];
@@ -190,16 +190,16 @@ void ADXL345_WE::getCorrectedRawValues(vector3_u *rawVal){
     rawVal->z = zRaw * 1.0 - (offsetVal.z / rangeFactor);
 }
 
-void ADXL345_WE::getGValues(vector3_u *gVal){
-    vector3_u rawVal;
+void ADXL345_WE::getGValues(xyzFloat *gVal){
+    xyzFloat rawVal;
     getCorrectedRawValues(&rawVal);
     *gVal = rawVal * corrFact * MILLI_G_PER_LSB * rangeFactor / 1000.0; 
 }
 
 /************ Angles and Orientation ************/ 
 
-void ADXL345_WE::getAngles(vector3_u *angleVal){
-    vector3_u gVal;
+void ADXL345_WE::getAngles(xyzFloat *angleVal){
+    xyzFloat gVal;
     getGValues(&gVal);
     if(gVal.x > 1){
         gVal.x = 1;
@@ -226,7 +226,7 @@ void ADXL345_WE::getAngles(vector3_u *angleVal){
     angleVal->z = (asin(gVal.z)) * 57.296;
 }
 
-void ADXL345_WE::getCorrAngles(vector3_u *corrAngleVal){
+void ADXL345_WE::getCorrAngles(xyzFloat *corrAngleVal){
     getAngles(&(*corrAngleVal));
     *corrAngleVal -= angleOffsetVal;
 }
@@ -235,17 +235,17 @@ void ADXL345_WE::measureAngleOffsets(){
     getAngles(&angleOffsetVal);
 }
 
-vector3_u ADXL345_WE::getAngleOffsets(){
+xyzFloat ADXL345_WE::getAngleOffsets(){
     return angleOffsetVal;
 }
 
-void ADXL345_WE::setAngleOffsets(vector3_u aos){
+void ADXL345_WE::setAngleOffsets(xyzFloat aos){
     angleOffsetVal = aos;
 }
 
 adxl345_orientation ADXL345_WE::getOrientation(){
     adxl345_orientation orientation = FLAT;
-    vector3_u angleVal;
+    xyzFloat angleVal;
     getAngles(&angleVal);
     if(abs(angleVal.x) < 45){      // |x| < 45
         if(abs(angleVal.y) < 45){      // |y| < 45
@@ -291,14 +291,14 @@ String ADXL345_WE::getOrientationAsString(){
 }
 
 float ADXL345_WE::getPitch(){
-    vector3_u gVal;
+    xyzFloat gVal;
     getGValues(&gVal);
     float pitch = (atan2(-gVal.x, sqrt(abs((gVal.y*gVal.y + gVal.z*gVal.z))))*180.0)/M_PI;
     return pitch;
 }
     
 float ADXL345_WE::getRoll(){
-    vector3_u gVal;
+    xyzFloat gVal;
     getGValues(&gVal);
     float roll = (atan2(gVal.y, gVal.z)*180.0)/M_PI;
     return roll;

@@ -119,7 +119,7 @@ void loop() {
   Serial.println("FiFo full");
   
   for(int i=0; i<34; i++){ // this is > 32 samples, but I want to show that the values do not change when FIFO is full
-    vector3_u g = myAcc.getGValues();
+    xyzFloat g = myAcc.getGValues();
     
     Serial.print("g-x   = ");
     Serial.print(g.x);

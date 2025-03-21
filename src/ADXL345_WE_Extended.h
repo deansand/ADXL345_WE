@@ -18,33 +18,33 @@
 #endif
 
 #ifdef
-struct vector3_u
+struct xyzFloat
 {
     float x;
     float y;
     float z;
-};
-// typedef struct vector3_u vector3_u_t;
+} axis_t;
+
+// typedef struct xyzFloat xyzFloat_t;
 #endif
 
-#ifdef
+
 // todo test
 typedef struct
 {
     volatile float *x;
     volatile float *y;
     volatile float *z;
-} xyzValues;
-#endif
+} axis_t;
 
-#ifdef
+
 // todo test
 typedef struct
 {
     xyzValues *values;
     volatile float *g;
 } xyzVectorG;
-#endif
+
 
 // #define ADXL345_OK    1 // no error
 // #define ADXL345_ERROR 0 // indicates error is predent
@@ -54,6 +54,30 @@ typedef struct
 class ADXL345_WE_COMBINED : public ADXL345_WE {
 public:
     using ADXL345_WE::ADXL345_WE;
+
+    bool selfTest() {
+        
+        //set selfTest bit = 1
+        setSelfTestBit(true);
+
+        //get value with selfTest
+        xyzValues selfTestData = readAccel();
+
+        //set selfTest bit = 0
+        setSelfTestBit(false);
+
+        //get value without selfTest
+        xyzValues normalData = readAccel();
+
+        //calculate difference betwen data
+        float diffX = std::abs(*selfTestData.x - *normalData.x);
+        float diffY = std::abs(*selfTestData.y - *normalData.y);
+        float diffZ = std::abs(*selfTestData.z - *normalData.z);
+    
+        //checking if data is in our limits
+        return(diffX >= EXPECTED_MIN_X && diffX <= EXPECTED_MAX_X
+            && diffY >= EXPECTED_MIN_Y && diffY <= EXPECTED_MAX_Y
+            && diffZ >= EXPECTED_MIN_Z && diffZ <= EXPECTED_MAX_Z)
 
     ADXL345_WE() : useSPI{false} {}
     #ifdef USE_I2C
@@ -89,9 +113,9 @@ protected:
         SPISettings mySPISettings;
     #endif
         uint8_t regVal; // intermediate storage of register values
-        vector3_u offsetVal;
-        vector3_u angleOffsetVal;
-        vector3_u corrFact;
+        xyzFloat offsetVal;
+        xyzFloat angleOffsetVal;
+        xyzFloat corrFact;
 
         bool useSPI;
     
@@ -111,15 +135,15 @@ protected:
         bool getRegisterBit(byte regAdress, int bitPos);
         void setRegisterBit(byte regAdress, int bitPos, bool state);
 
-        void setAngleOffsets(vector3_u aos);
+        void setAngleOffsets(xyzFloat aos);
     
     uint8_t regVal; // intermediate storage of register values
-    vector3_u offsetVal;
-    vector3_u angleOffsetVal;
-    vector3_u corrFact;
+    xyzFloat offsetVal;
+    xyzFloat angleOffsetVal;
+    xyzFloat corrFact;
     
     /* Angles and Orientation */
-    void measureAngleOffsets(vector3_u *aos = nullptr);
+    void measureAngleOffsets(xyzFloat *aos = nullptr);
 
 
     /** The parameters of the setFreeFallThresholds function are:
@@ -166,6 +190,12 @@ private:
     // int16_t getAccelerationX();
     // int16_t getAccelerationY();
     // int16_t getAccelerationZ();
+    static constexpr float EXPECTED_MIN_X = 0.1;
+    static constexpr float EXPECTED_MAX_X = 0.3;
+    static constexpr float EXPECTED_MIN_Y = 0.1;
+    static constexpr float EXPECTED_MAX_Y = 0.3;
+    static constexpr float EXPECTED_MIN_Z = 0.1;
+    static constexpr float EXPECTED_MAX_Z = 0.3;
 }
 
 
@@ -603,7 +633,7 @@ void ADXL345_WE::burstReadXYZ(float *x, float *y, float *z, byte samples)
 {
     for (int i = 0; i < samples; i++)
     {
-        vector3_u rawData = getRawValues();
+        xyzFloat rawData = getRawValues();
         x[i] = rawData.x;
         y[i] = rawData.y;
         z[i] = rawData.z;

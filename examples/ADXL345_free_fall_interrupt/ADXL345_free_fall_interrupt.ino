@@ -99,8 +99,8 @@ void setup(){
 }
 
 void loop() {
-  vector3_u raw = myAcc.getRawValues();
-  vector3_u g = myAcc.getGValues();
+  xyzFloat raw = myAcc.getRawValues();
+  xyzFloat g = myAcc.getGValues();
      
   Serial.print("Raw-x = ");
   Serial.print(raw.x);

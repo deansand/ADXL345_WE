@@ -86,8 +86,8 @@ void setup(){
 }
 
 void loop() {
-  //vector3_u g = myAcc.getGValues();
-  vector3_u corrAngles = myAcc.getCorrAngles();
+  //xyzFloat g = myAcc.getGValues();
+  xyzFloat corrAngles = myAcc.getCorrAngles();
   
 /* Corrected angles use corrected raws and an extra angle
     offset. The method provides quite precise values for x/y 

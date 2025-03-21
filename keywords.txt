@@ -35,7 +35,7 @@ ADXL345_TRIGGER_INT	KEYWORD1
 adxl345_triggerInt	KEYWORD1
 
 # STRUCT TYPES
-vector3_u	KEYWORD1
+xyzFloat	KEYWORD1
 
 
 #######################################
